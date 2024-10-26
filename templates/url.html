@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortened  Url</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .url-display {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h2>Original URL:</h2>
+        <div class="url-display">{{.URL}}</div>
+
+        <h2>New URL:</h2>
+        <div class="url-display">{{.NewURL}}</div>
+
+        {{if .Success}}
+            <p class="success">{{.Message}}</p>
+        {{else}}
+            <p class="error">{{.Message}}</p>
+        {{end}}
+    </div>
+</body>
+</html>
