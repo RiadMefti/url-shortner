@@ -8,6 +8,7 @@ import (
 )
 
 func main() {
+
 	// Serve static files
 	http.Handle("GET /static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	// Route handlers
