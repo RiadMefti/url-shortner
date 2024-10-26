@@ -5,6 +5,8 @@ import (
 	"html/template"
 	"net/http"
 	"strings"
+
+	"github.com/RiadMefti/url-shortner/services"
 )
 
 type MainPage struct {
@@ -31,6 +33,8 @@ func ServeIndex(w http.ResponseWriter, r *http.Request) {
 func ParseForm(w http.ResponseWriter, r *http.Request) {
 
 	inputURL := strings.TrimSpace(r.FormValue("url"))
+
+	services.CreateURl()
 
 	newUrl := inputURL + "HEHEHE NEW URL"
 
