@@ -31,12 +31,27 @@ func ServeIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func ParseForm(w http.ResponseWriter, r *http.Request) {
-
 	inputURL := strings.TrimSpace(r.FormValue("url"))
-
-	services.CreateURl()
-
-	newUrl := inputURL + "HEHEHE NEW URL"
+	id := services.CreateURl(inputURL)
+	
+	// Get the scheme (http/https)
+	scheme := "http"
+	if r.TLS != nil {
+		scheme = "https"
+	}
+	// If you're behind a proxy that sets X-Forwarded-Proto header
+	if forwardedProto := r.Header.Get("X-Forwarded-Proto"); forwardedProto != "" {
+		scheme = forwardedProto
+	}
+	
+	// Get the host
+	host := r.Host
+	
+	// Construct the base URL
+	baseURL := fmt.Sprintf("%s://%s", scheme, host)
+	
+	// Create the new shortened URL
+	newUrl := fmt.Sprintf("%s/%s", baseURL, id)
 
 	data := ShortenedUrlPage{
 		URL:     inputURL,
