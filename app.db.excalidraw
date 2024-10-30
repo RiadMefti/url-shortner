@@ -124,7 +124,7 @@
       "containerId": null,
       "originalText": "url",
       "lineHeight": 1.25,
-      "baseline": 26
+      "baseline": 25
     },
     {
       "type": "arrow",
@@ -209,7 +209,7 @@
       "containerId": null,
       "originalText": "short-url",
       "lineHeight": 1.25,
-      "baseline": 26
+      "baseline": 25
     },
     {
       "type": "rectangle",
@@ -283,7 +283,7 @@
       "containerId": null,
       "originalText": "Verify",
       "lineHeight": 1.25,
-      "baseline": 26
+      "baseline": 25
     },
     {
       "type": "rectangle",
@@ -512,7 +512,7 @@
       "containerId": null,
       "originalText": "Get duplicate",
       "lineHeight": 1.25,
-      "baseline": 26
+      "baseline": 25
     },
     {
       "type": "text",
@@ -548,7 +548,7 @@
       "containerId": null,
       "originalText": "Creation",
       "lineHeight": 1.25,
-      "baseline": 26
+      "baseline": 25
     },
     {
       "type": "rectangle",
@@ -622,7 +622,7 @@
       "containerId": null,
       "originalText": "Analytique",
       "lineHeight": 1.25,
-      "baseline": 26
+      "baseline": 25
     },
     {
       "type": "arrow",
@@ -754,7 +754,7 @@
       "containerId": null,
       "originalText": "Saving",
       "lineHeight": 1.25,
-      "baseline": 26
+      "baseline": 25
     },
     {
       "type": "arrow",
@@ -931,7 +931,7 @@
       "containerId": null,
       "originalText": "SQL\nLite",
       "lineHeight": 1.25,
-      "baseline": 61
+      "baseline": 60
     },
     {
       "type": "rectangle",
@@ -996,7 +996,7 @@
       "containerId": null,
       "originalText": "Cache\nSystem",
       "lineHeight": 1.25,
-      "baseline": 61
+      "baseline": 60
     },
     {
       "type": "rectangle",
@@ -1061,12 +1061,12 @@
       "containerId": null,
       "originalText": "Url Creation pipeline",
       "lineHeight": 1.25,
-      "baseline": 62
+      "baseline": 61
     },
     {
       "type": "text",
-      "version": 230,
-      "versionNonce": 647896105,
+      "version": 236,
+      "versionNonce": 832215877,
       "isDeleted": false,
       "id": "wESdk8h2ErT73N7iKQPGr",
       "fillStyle": "solid",
@@ -1075,8 +1075,8 @@
       "roughness": 1,
       "opacity": 100,
       "angle": 0,
-      "x": 8292.691291002699,
-      "y": 7746.840421099471,
+      "x": 8340,
+      "y": 7760,
       "strokeColor": "#1e1e1e",
       "backgroundColor": "transparent",
       "width": 123.19099426269531,
@@ -1086,7 +1086,7 @@
       "frameId": null,
       "roundness": null,
       "boundElements": [],
-      "updated": 1730138742606,
+      "updated": 1730163016220,
       "link": null,
       "locked": false,
       "fontSize": 65.26163252304681,
@@ -1097,7 +1097,7 @@
       "containerId": null,
       "originalText": "Data",
       "lineHeight": 1.25,
-      "baseline": 62
+      "baseline": 61
     }
   ],
   "appState": {

@@ -90,3 +90,34 @@ func IDExists(url string) (bool, error) {
 
 	return true, nil
 }
+
+
+func GetUrl(id string) (string, error) {
+	db, err := sql.Open("sqlite3", "app.db")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	query := "SELECT original_url FROM urls WHERE id_url = ?"
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		// Handle error
+		return "", err
+	}
+	defer stmt.Close()
+
+	var url string
+	err = stmt.QueryRow(id).Scan(&url)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			// Handle case where no rows were returned
+			fmt.Println("No rows found")
+			return "", nil
+		}
+
+		return "", err
+	}
+
+	return url, nil
+}

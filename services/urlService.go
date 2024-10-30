@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"log"
 	"math/big"
+	"net/http"
 
 	"github.com/RiadMefti/url-shortner/models"
 	"github.com/RiadMefti/url-shortner/repository"
@@ -64,4 +65,23 @@ func createUniqueId() string {
 		createUniqueId()
 	}
 	return string(uniqueId)
+}
+
+func GetUrl(id string) (string, error) {
+	url, err := repository.GetUrl(id)
+	if err != nil {
+		return "", err
+	}
+	return url, nil
+}
+func HandleRedirect(w http.ResponseWriter, r *http.Request) {
+	// Get the ID from the URL path
+	id := r.PathValue("id")
+	url, err := GetUrl(id)
+	if err != nil {
+		http.Error(w, "URL not found", http.StatusNotFound)
+		return
+	}
+	http.Redirect(w, r, url, http.StatusFound)
+
 }
