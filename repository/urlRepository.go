@@ -38,7 +38,7 @@ func UrlExists(url string) (*models.URLExists, error) {
 	}
 	defer db.Close()
 
-	query := "SELECT original_url FROM urls WHERE id_url = ?"
+	query := "SELECT id_url FROM urls WHERE original_url = ?"
 	stmt, err := db.Prepare(query)
 	if err != nil {
 		// Handle error
@@ -90,7 +90,6 @@ func IDExists(url string) (bool, error) {
 
 	return true, nil
 }
-
 
 func GetUrl(id string) (string, error) {
 	db, err := sql.Open("sqlite3", "app.db")
