@@ -5,12 +5,17 @@ import (
 	"html/template"
 	"net/http"
 	"strings"
+
 	"github.com/RiadMefti/url-shortner/models"
 
 	"github.com/RiadMefti/url-shortner/services"
 )
 
-func ServeIndex(w http.ResponseWriter, r *http.Request) {
+type StaticFile struct {
+	UrlService *services.UrlService
+}
+
+func (s *StaticFile) ServeIndex(w http.ResponseWriter, r *http.Request) {
 	tmpl, err := template.ParseFiles("templates/index.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -19,9 +24,9 @@ func ServeIndex(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, &models.MainPage{})
 }
 
-func ParseForm(w http.ResponseWriter, r *http.Request) {
+func (s *StaticFile) ParseForm(w http.ResponseWriter, r *http.Request) {
 	inputURL := strings.TrimSpace(r.FormValue("url"))
-	id := services.CreateURl(inputURL)
+	id := s.UrlService.CreateURl(inputURL)
 
 	// Get the scheme (http/https)
 	scheme := "http"

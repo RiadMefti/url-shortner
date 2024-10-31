@@ -10,16 +10,20 @@ import (
 	"github.com/RiadMefti/url-shortner/repository"
 )
 
+type UrlService struct {
+	Repository *repository.Repository
+}
+
 const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
-func CreateURl(url string) string {
+func (s *UrlService) CreateURl(url string) string {
 
-	exists := urlExists(url)
+	exists := s.urlExists(url)
 	if exists.Exists {
 		return *exists.IdUrl
 	}
-	uniqueUrl := createUniqueId()
-	err := repository.PostUrl(uniqueUrl, url)
+	uniqueUrl := s.createUniqueId()
+	err := s.Repository.PostUrl(uniqueUrl, url)
 
 	if err != nil {
 		log.Fatal(err)
@@ -29,20 +33,9 @@ func CreateURl(url string) string {
 
 }
 
-func urlExists(url string) *models.URLExists {
+func (s *UrlService) urlExists(url string) *models.URLExists {
 
-	exists, err := repository.UrlExists(url)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return exists
-}
-
-func idExists(id string) bool {
-
-	exists, err := repository.IDExists(id)
+	exists, err := s.Repository.UrlExists(url)
 
 	if err != nil {
 		log.Fatal(err)
@@ -51,7 +44,18 @@ func idExists(id string) bool {
 	return exists
 }
 
-func createUniqueId() string {
+func (s *UrlService) idExists(id string) bool {
+
+	exists, err := s.Repository.IDExists(id)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return exists
+}
+
+func (s *UrlService) createUniqueId() string {
 	idLength := 8
 	uniqueId := make([]byte, idLength)
 	for i := range uniqueId {
@@ -61,23 +65,23 @@ func createUniqueId() string {
 		}
 		uniqueId[i] = charset[randomIndex.Int64()]
 	}
-	if idExists(string(uniqueId)) {
-		createUniqueId()
+	if s.idExists(string(uniqueId)) {
+		s.createUniqueId()
 	}
 	return string(uniqueId)
 }
 
-func GetUrl(id string) (string, error) {
-	url, err := repository.GetUrl(id)
+func (s *UrlService) GetUrl(id string) (string, error) {
+	url, err := s.Repository.GetUrl(id)
 	if err != nil {
 		return "", err
 	}
 	return url, nil
 }
-func HandleRedirect(w http.ResponseWriter, r *http.Request) {
+func (s *UrlService) HandleRedirect(w http.ResponseWriter, r *http.Request) {
 	// Get the ID from the URL path
 	id := r.PathValue("id")
-	url, err := GetUrl(id)
+	url, err := s.GetUrl(id)
 	if err != nil {
 		http.Error(w, "URL not found", http.StatusNotFound)
 		return

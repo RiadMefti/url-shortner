@@ -3,21 +3,18 @@ package repository
 import (
 	"database/sql"
 	"fmt"
-	"log"
 
 	"github.com/RiadMefti/url-shortner/models"
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func PostUrl(uniqueUrl string, url string) error {
-	db, err := sql.Open("sqlite3", "app.db")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
+type Repository struct {
+	Db *sql.DB
+}
 
+func (r *Repository) PostUrl(uniqueUrl string, url string) error {
 	query := "INSERT INTO urls(id_url, original_url) VALUES(?, ?)"
-	stmt, err := db.Prepare(query)
+	stmt, err := r.Db.Prepare(query)
 	if err != nil {
 		return err
 	}
@@ -31,15 +28,9 @@ func PostUrl(uniqueUrl string, url string) error {
 	return nil
 }
 
-func UrlExists(url string) (*models.URLExists, error) {
-	db, err := sql.Open("sqlite3", "app.db")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
-
+func (r *Repository) UrlExists(url string) (*models.URLExists, error) {
 	query := "SELECT id_url FROM urls WHERE original_url = ?"
-	stmt, err := db.Prepare(query)
+	stmt, err := r.Db.Prepare(query)
 	if err != nil {
 		// Handle error
 		return nil, err
@@ -61,15 +52,10 @@ func UrlExists(url string) (*models.URLExists, error) {
 	fmt.Println("Original URL:", *originalUrl)
 	return &models.URLExists{Exists: true, IdUrl: originalUrl}, nil
 }
-func IDExists(url string) (bool, error) {
-	db, err := sql.Open("sqlite3", "app.db")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
 
+func (r *Repository) IDExists(url string) (bool, error) {
 	query := "SELECT id_url FROM urls WHERE original_url = ?"
-	stmt, err := db.Prepare(query)
+	stmt, err := r.Db.Prepare(query)
 	if err != nil {
 		// Handle error
 		return true, err
@@ -91,15 +77,9 @@ func IDExists(url string) (bool, error) {
 	return true, nil
 }
 
-func GetUrl(id string) (string, error) {
-	db, err := sql.Open("sqlite3", "app.db")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
-
+func (r *Repository) GetUrl(id string) (string, error) {
 	query := "SELECT original_url FROM urls WHERE id_url = ?"
-	stmt, err := db.Prepare(query)
+	stmt, err := r.Db.Prepare(query)
 	if err != nil {
 		// Handle error
 		return "", err
