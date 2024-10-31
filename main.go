@@ -48,12 +48,12 @@ func main() {
 	mux := http.NewServeMux()
 
 	// Serve static files
-	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 	// Route handlers with error handling middleware
-	mux.Handle("/", errorHandler(http.HandlerFunc(fileHandler.ServeIndex)))
-	mux.Handle("/parse", errorHandler(http.HandlerFunc(fileHandler.ParseForm)))
-	mux.Handle("/{id}", errorHandler(http.HandlerFunc(urlService.HandleRedirect)))
+	mux.Handle("GET /", errorHandler(http.HandlerFunc(fileHandler.ServeIndex)))
+	mux.Handle("POST /parse", errorHandler(http.HandlerFunc(fileHandler.ParseForm)))
+	mux.Handle("GET /{id}", errorHandler(http.HandlerFunc(urlService.HandleRedirect)))
 
 	// Use `PORT` provided in environment or default to 3000
 	port := os.Getenv("PORT")
