@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"path/filepath"
 
 	"github.com/RiadMefti/url-shortner/filehandler"
 	"github.com/RiadMefti/url-shortner/repository"
@@ -27,14 +26,8 @@ func errorHandler(next http.Handler) http.Handler {
 
 func initializeDB() (*sql.DB, error) {
 	// Create a data directory in /tmp for Railway
-	dbPath := filepath.Join(os.TempDir(), "data")
-	if err := os.MkdirAll(dbPath, 0755); err != nil {
-		return nil, err
-	}
 
-	// Use the temporary directory for the SQLite database
-	dbFile := filepath.Join(dbPath, "app.db")
-	db, err := sql.Open("sqlite3", dbFile)
+	db, err := sql.Open("sqlite3", "app.db")
 	if err != nil {
 		return nil, err
 	}
