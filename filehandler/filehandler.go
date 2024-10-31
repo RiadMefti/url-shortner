@@ -5,21 +5,10 @@ import (
 	"html/template"
 	"net/http"
 	"strings"
+	"github.com/RiadMefti/url-shortner/models"
 
 	"github.com/RiadMefti/url-shortner/services"
 )
-
-type MainPage struct {
-	URL    string
-	NewURL string
-}
-
-type ShortenedUrlPage struct {
-	URL     string
-	NewURL  string
-	Success bool
-	Message string
-}
 
 func ServeIndex(w http.ResponseWriter, r *http.Request) {
 	tmpl, err := template.ParseFiles("templates/index.html")
@@ -27,13 +16,13 @@ func ServeIndex(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	tmpl.Execute(w, &MainPage{})
+	tmpl.Execute(w, &models.MainPage{})
 }
 
 func ParseForm(w http.ResponseWriter, r *http.Request) {
 	inputURL := strings.TrimSpace(r.FormValue("url"))
 	id := services.CreateURl(inputURL)
-	
+
 	// Get the scheme (http/https)
 	scheme := "http"
 	if r.TLS != nil {
@@ -43,17 +32,17 @@ func ParseForm(w http.ResponseWriter, r *http.Request) {
 	if forwardedProto := r.Header.Get("X-Forwarded-Proto"); forwardedProto != "" {
 		scheme = forwardedProto
 	}
-	
+
 	// Get the host
 	host := r.Host
-	
+
 	// Construct the base URL
 	baseURL := fmt.Sprintf("%s://%s", scheme, host)
-	
+
 	// Create the new shortened URL
 	newUrl := fmt.Sprintf("%s/%s", baseURL, id)
 
-	data := ShortenedUrlPage{
+	data := models.ShortenedUrlPage{
 		URL:     inputURL,
 		NewURL:  newUrl,
 		Success: true,
