@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/RiadMefti/url-shortner/filehandler"
 	"github.com/RiadMefti/url-shortner/repository"
 	"github.com/RiadMefti/url-shortner/services"
 	_ "github.com/mattn/go-sqlite3"
@@ -74,7 +75,7 @@ func main() {
 	urlService := services.UrlService{
 		Repository: &repo,
 	}
-	fileHandler := services.StaticFileService{
+	fileHandler := filehandler.StaticFile{
 		UrlService: &urlService,
 	}
 

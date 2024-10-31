@@ -1,4 +1,4 @@
-package services
+package filehandler
 
 import (
 	"fmt"
@@ -7,13 +7,15 @@ import (
 	"strings"
 
 	"github.com/RiadMefti/url-shortner/models"
+
+	"github.com/RiadMefti/url-shortner/services"
 )
 
-type StaticFileService struct {
-	UrlService *UrlService
+type StaticFile struct {
+	UrlService *services.UrlService
 }
 
-func (s *StaticFileService) ServeIndex(w http.ResponseWriter, r *http.Request) {
+func (s *StaticFile) ServeIndex(w http.ResponseWriter, r *http.Request) {
 	tmpl, err := template.ParseFiles("templates/index.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -22,7 +24,7 @@ func (s *StaticFileService) ServeIndex(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, &models.MainPage{})
 }
 
-func (s *StaticFileService) ParseForm(w http.ResponseWriter, r *http.Request) {
+func (s *StaticFile) ParseForm(w http.ResponseWriter, r *http.Request) {
 	inputURL := strings.TrimSpace(r.FormValue("url"))
 	id := s.UrlService.CreateURl(inputURL)
 
