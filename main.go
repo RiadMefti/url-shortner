@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/RiadMefti/url-shortner/filehandler"
 	"github.com/RiadMefti/url-shortner/repository"
 	"github.com/RiadMefti/url-shortner/services"
 )
@@ -26,7 +25,7 @@ func main() {
 	urlService := services.UrlService{
 		Repository: &repo,
 	}
-	fileHandler := filehandler.StaticFile{
+	fileHandler := services.StaticFileService{
 		UrlService: &urlService,
 	}
 
