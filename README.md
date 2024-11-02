@@ -2,6 +2,9 @@
 
 A fast and lightweight URL shortening service built with Go and SQLite. This service allows you to create shortened versions of long URLs, making them easier to share and manage.
 
+# Deployed version 
+[url-shortner](https://url-shortner-production-d983.up.railway.app/)
+
 ## Features
 
 - Create shortened URLs from long URLs
@@ -46,13 +49,8 @@ docker run -p 8080:8080 url-shortener
 ### API Endpoints
 
 ```bash
-# Shorten a URL
-curl -X POST http://localhost:8080/shorten \
-  -H "Content-Type: application/json" \
-  -d '{"url": "https://very-long-url.com/with/many/parameters"}'
-
-# Access a shortened URL
-curl http://localhost:8080/{shortCode}
+# Access it 
+http://localhost:8080
 ```
 
 ### Running Locally
