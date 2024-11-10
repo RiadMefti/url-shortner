@@ -3,7 +3,7 @@
 A fast and lightweight URL shortening service built with Go and SQLite. This service allows you to create shortened versions of long URLs, making them easier to share and manage.
 
 # Deployed version 
-[url-shortner](https://url-shortner-production-d983.up.railway.app/)
+[url-shortner](https://url-shortner-production-35f7.up.railway.app/)
 
 ## Features
 
